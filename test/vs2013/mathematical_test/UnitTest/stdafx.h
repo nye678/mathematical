@@ -13,4 +13,5 @@
 // TODO: reference additional headers your program requires here
 #include <cmath>
 #include "Vector.h"
+#include "Matrix.h"
 using namespace mathematical;

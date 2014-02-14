@@ -62,12 +62,12 @@ namespace mathematical {
 			// Meta Test Express
 			// Performs some boolean operation on the two vectors, comparing element to element.
 			template <int I>
-			static inline bool test(S &lhs, const S &rhs, BoolOp op) {
+			static inline bool test(const S &lhs, const S &rhs, BoolOp op) {
 				return op(lhs[I], rhs[I]) && test<I - 1>(lhs, rhs, op);
 			}
 
 			template <>
-			static inline bool test<0>(S &lhs, const S &rhs, BoolOp op) {
+			static inline bool test<0>(const S &lhs, const S &rhs, BoolOp op) {
 				return op(lhs[0], rhs[0]);
 			}
 
@@ -82,6 +82,57 @@ namespace mathematical {
 			template <>
 			static inline T sum<0>(S &lhs, const S &rhs, ArithOp sumOp, ArithOp op) {
 				return op(lhs[0], rhs[0]);
+			}
+		};
+
+		template <typename S, typename T, size_t N>
+		struct MatrixMeta {
+			// Meta Dot
+			// Performs a dot product calculation on the row of the left matrix and the column
+			// of the right matrix. Used for matrix multiplication.
+			template <size_t I>
+			static inline T matrixDot(S &lhs, const S &rhs, size_t row, size_t col)
+			{
+				return lhs[row + I * N] * rhs[col + I] + matrixDot<I - 1>(lhs, rhs, row, col);
+			}
+
+			template <>
+			static inline T matrixDot<0>(S &lhs, const S &rhs, size_t row, size_t col)
+			{
+				return lhs[row] * rhs[col];
+			}
+
+			// Meta Multiply
+			// Used to multiply two matricies together. It recusively generates code
+			// to perform dot products on each cell and then stuffs them all in the
+			// left matrix.
+			template <int I>
+			static inline void matrixMulti(S &lhs, const S &rhs) {
+				size_t row = I % N;
+				size_t col = (I / N) * N;
+				T dot = matrixDot<N - 1>(lhs, rhs, row, col);
+				matrixMulti<I - 1>(lhs, rhs);
+				lhs[I] = dot;
+			}
+
+			template <>
+			static inline void matrixMulti<0>(S &lhs, const S &rhs) {
+				lhs[0] = matrixDot<N - 1>(lhs, rhs, 0, 0);
+			}
+
+			// Meta Diagonal
+			// Sets all the diagonal cells in the matrix to the given value.
+			template <int I>
+			static inline void diagonal(S &matrix, T value)
+			{
+				matrix[I*(N + 1)] = value;
+				return diagonal<I - 1>(matrix, value);
+			}
+
+			template <>
+			static inline void diagonal<0>(S &matrix, T value)
+			{
+				matrix[0] = value;
 			}
 		};
 	}

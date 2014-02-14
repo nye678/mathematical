@@ -95,10 +95,10 @@ namespace mathematical {
 			const T operator [] (size_t index) const { return _vec[index]; }
 
 			// Vector Related Functions
-			inline T dot(const vec3T &other){ return meta::sum<2>(*this, other, arith::opPlus, arith::opMulti); }
-			inline T lengthsqrd()		{ return dot(*this); }
-			inline T length()			{ return sqrt(lengthsqrd()); }
-			inline void normalize()		{ *this /= length(); }
+			inline T dot(const vec3T &other) { return meta::sum<2>(*this, other, arith::opPlus, arith::opMulti); }
+			inline T lengthsqrd()			 { return dot(*this); }
+			inline T length()				 { return sqrt(lengthsqrd()); }
+			inline vec3T normalize()		 { *this /= length(); return *this; }
 
 			inline vec3T cross(const vec3T &other) {
 				return vec3T(y * other.z - z * other.y, -(x * other.z - z * other.x), x * other.y - y * other.x);
@@ -112,6 +112,8 @@ namespace mathematical {
 			vec3T(T x, T y, T z) : vec3T() { _vec[0] = x; _vec[1] = y; _vec[2] = z; }
 			// Copy Constructor
 			vec3T(const vec3T &other) : x(_vec[0]), y(_vec[1]), z(_vec[2]) { memcpy(&_vec, &other._vec, 3 * sizeof T); }
+
+			static vec3T normalize(vec3T vec) { return vec.normalize(); }
 		};
 
 		// Binary Operators
