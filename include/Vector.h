@@ -49,18 +49,20 @@ namespace mathematical {
 			vec2T(T v) : vec2T() { _vec[0] = v; _vec[1] = v; }
 			// Element Constructor, Initializes all elements to the given element values.
 			vec2T(T x, T y) : vec2T() { _vec[0] = x; _vec[1] = y; }
+			// Copy Constructor
+			vec2T(const vec2T &other) : x(_vec[0]), y(_vec[1]) { memcpy(&_vec, &other._vec, 2 * sizeof T); }
 		};
 
 		// Binary Operators
-		template <typename T> vec2T<T> &operator + (vec2T<T> lhs, const vec2T<T> rhs) { return lhs += rhs; }
-		template <typename T> vec2T<T> &operator - (vec2T<T> lhs, const vec2T<T> rhs) { return lhs -= rhs; }
-		template <typename T> vec2T<T> &operator * (vec2T<T> lhs, const vec2T<T> rhs) { return lhs *= rhs; }
-		template <typename T> vec2T<T> &operator / (vec2T<T> lhs, const vec2T<T> rhs) { return lhs /= rhs; }
+		template <typename T> inline vec2T<T> operator + (vec2T<T> lhs, const vec2T<T> rhs) { return lhs += rhs; }
+		template <typename T> inline vec2T<T> operator - (vec2T<T> lhs, const vec2T<T> rhs) { return lhs -= rhs; }
+		template <typename T> inline vec2T<T> operator * (vec2T<T> lhs, const vec2T<T> rhs) { return lhs *= rhs; }
+		template <typename T> inline vec2T<T> operator / (vec2T<T> lhs, const vec2T<T> rhs) { return lhs /= rhs; }
 
-		template <typename T> vec2T<T> &operator + (vec2T<T> lhs, T rhs) { return lhs += rhs; }
-		template <typename T> vec2T<T> &operator - (vec2T<T> lhs, T rhs) { return lhs -= rhs; }
-		template <typename T> vec2T<T> &operator * (vec2T<T> lhs, T rhs) { return lhs *= rhs; }
-		template <typename T> vec2T<T> &operator / (vec2T<T> lhs, T rhs) { return lhs /= rhs; }
+		template <typename T> inline vec2T<T> operator + (vec2T<T> lhs, T rhs) { return lhs += rhs; }
+		template <typename T> inline vec2T<T> operator - (vec2T<T> lhs, T rhs) { return lhs -= rhs; }
+		template <typename T> inline vec2T<T> operator * (vec2T<T> lhs, T rhs) { return lhs *= rhs; }
+		template <typename T> inline vec2T<T> operator / (vec2T<T> lhs, T rhs) { return lhs /= rhs; }
 
 		// 3 Element Vector
 		template <typename T>
@@ -108,18 +110,20 @@ namespace mathematical {
 			vec3T(T v) : vec3T() { _vec[0] = v; _vec[1] = v; _vec[2] = v; }
 			// Element Constructor, Initializes all elements to the given element values.
 			vec3T(T x, T y, T z) : vec3T() { _vec[0] = x; _vec[1] = y; _vec[2] = z; }
+			// Copy Constructor
+			vec3T(const vec3T &other) : x(_vec[0]), y(_vec[1]), z(_vec[2]) { memcpy(&_vec, &other._vec, 3 * sizeof T); }
 		};
 
 		// Binary Operators
-		template <typename T> vec3T<T> &operator + (vec3T<T> lhs, const vec3T<T> rhs) { return lhs += rhs; }
-		template <typename T> vec3T<T> &operator - (vec3T<T> lhs, const vec3T<T> rhs) { return lhs -= rhs; }
-		template <typename T> vec3T<T> &operator * (vec3T<T> lhs, const vec3T<T> rhs) { return lhs *= rhs; }
-		template <typename T> vec3T<T> &operator / (vec3T<T> lhs, const vec3T<T> rhs) { return lhs /= rhs; }
+		template <typename T> inline vec3T<T> operator + (vec3T<T> lhs, const vec3T<T> rhs) { return lhs += rhs; }
+		template <typename T> inline vec3T<T> operator - (vec3T<T> lhs, const vec3T<T> rhs) { return lhs -= rhs; }
+		template <typename T> inline vec3T<T> operator * (vec3T<T> lhs, const vec3T<T> rhs) { return lhs *= rhs; }
+		template <typename T> inline vec3T<T> operator / (vec3T<T> lhs, const vec3T<T> rhs) { return lhs /= rhs; }
 
-		template <typename T> vec3T<T> &operator + (vec3T<T> lhs, T rhs) { return lhs += rhs; }
-		template <typename T> vec3T<T> &operator - (vec3T<T> lhs, T rhs) { return lhs -= rhs; }
-		template <typename T> vec3T<T> &operator * (vec3T<T> lhs, T rhs) { return lhs *= rhs; }
-		template <typename T> vec3T<T> &operator / (vec3T<T> lhs, T rhs) { return lhs /= rhs; }
+		template <typename T> inline vec3T<T> operator + (vec3T<T> lhs, T rhs) { return lhs += rhs; }
+		template <typename T> inline vec3T<T> operator - (vec3T<T> lhs, T rhs) { return lhs -= rhs; }
+		template <typename T> inline vec3T<T> operator * (vec3T<T> lhs, T rhs) { return lhs *= rhs; }
+		template <typename T> inline vec3T<T> operator / (vec3T<T> lhs, T rhs) { return lhs /= rhs; }
 
 		// 4 Element Vector
 		template <typename T>
@@ -160,21 +164,23 @@ namespace mathematical {
 			// Default Constructor, Initializes all elements to 0.
 			vec4T() : x(_vec[0]), y(_vec[1]), z(_vec[2]), w(_vec[3]) { memset(&_vec, 0, 2 * sizeof T); }
 			// Single Constructor, Initializes all elements to the value.
-			vec4T(T v) : vec4T() { _vec[0] = v, _vec[1] = v, _vec[2] = v, _vec[3] = v }
+			vec4T(T v) : vec4T() { _vec[0] = v; _vec[1] = v; _vec[2] = v; _vec[3] = v; }
 			// Element Constructor, Initializes all elements to the given element values.
-			vec4T(T x, T y, T z, T w) : vec4T() { _vec[0] = x, _vec[1] = y, _vec[2] = z, _vec[3] = w }
+			vec4T(T x, T y, T z, T w) : vec4T() { _vec[0] = x; _vec[1] = y; _vec[2] = z; _vec[3] = w; }
+			// Copy Constructor
+			vec4T(const vec4T &other) : x(_vec[0]), y(_vec[1]), z(_vec[2]), w(_vec[3]) { memcpy(&_vec, &other._vec, 4 * sizeof T); }
 		};
 
 		// Binary Operators
-		template <typename T> vec4T<T> &operator + (vec4T<T> lhs, const vec4T<T> rhs) { return lhs += rhs; }
-		template <typename T> vec4T<T> &operator - (vec4T<T> lhs, const vec4T<T> rhs) { return lhs -= rhs; }
-		template <typename T> vec4T<T> &operator * (vec4T<T> lhs, const vec4T<T> rhs) { return lhs *= rhs; }
-		template <typename T> vec4T<T> &operator / (vec4T<T> lhs, const vec4T<T> rhs) { return lhs /= rhs; }
+		template <typename T> inline vec4T<T> operator + (vec4T<T> lhs, const vec4T<T> rhs) { return lhs += rhs; }
+		template <typename T> inline vec4T<T> operator - (vec4T<T> lhs, const vec4T<T> rhs) { return lhs -= rhs; }
+		template <typename T> inline vec4T<T> operator * (vec4T<T> lhs, const vec4T<T> rhs) { return lhs *= rhs; }
+		template <typename T> inline vec4T<T> operator / (vec4T<T> lhs, const vec4T<T> rhs) { return lhs /= rhs; }
 
-		template <typename T> vec4T<T> &operator + (vec4T<T> lhs, T rhs) { return lhs += rhs; }
-		template <typename T> vec4T<T> &operator - (vec4T<T> lhs, T rhs) { return lhs -= rhs; }
-		template <typename T> vec4T<T> &operator * (vec4T<T> lhs, T rhs) { return lhs *= rhs; }
-		template <typename T> vec4T<T> &operator / (vec4T<T> lhs, T rhs) { return lhs /= rhs; }
+		template <typename T> inline vec4T<T> operator + (vec4T<T> lhs, T rhs) { return lhs += rhs; }
+		template <typename T> inline vec4T<T> operator - (vec4T<T> lhs, T rhs) { return lhs -= rhs; }
+		template <typename T> inline vec4T<T> operator * (vec4T<T> lhs, T rhs) { return lhs *= rhs; }
+		template <typename T> inline vec4T<T> operator / (vec4T<T> lhs, T rhs) { return lhs /= rhs; }
 
 	}
 
