@@ -44,5 +44,13 @@ namespace UnitTest
 			Assert::AreEqual<float>(v1.length(), 1.0f);
 		}
 
+		TEST_METHOD(Vector2_Swizzle)
+		{
+			vec4f v1 = vec4f(3.0f, 4.0f, 5.0f, 6.0f);
+			vec2f v2 = Swizzlef::yw(v1);
+
+			Assert::IsTrue(v2.x == 4.0f && v2.y == 6.0f);
+		}
+
 	};
 }

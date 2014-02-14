@@ -14,4 +14,5 @@
 #include <cmath>
 #include "Vector.h"
 #include "Matrix.h"
+#include "Swizzle.h"
 using namespace mathematical;
