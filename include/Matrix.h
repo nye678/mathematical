@@ -282,12 +282,12 @@ namespace mathematical {
 
 
 	typedef temps::mat2T<float> mat2f;
-	/*typedef temps::mat3T<float> mat3f;
-	typedef temps::mat4T<float> mat4f;*/
+	typedef temps::mat3T<float> mat3f;
+	typedef temps::mat4T<float> mat4f;
 
 	typedef temps::mat2T<double> mat2d;
-	/*typedef temps::mat3T<double> mat3d;
-	typedef temps::mat4T<double> mat4d;*/
+	typedef temps::mat3T<double> mat3d;
+	typedef temps::mat4T<double> mat4d;
 
 }
 

@@ -7,38 +7,40 @@
 
 namespace mathematical {
 	namespace temps {
+
+		// Forward Declarations
+		template <typename T> class vec2T;
+		template <typename T> class vec3T;
+		template <typename T> class vec4T;
+
 		// 2 Element Vector
 		template <typename T>
 		class vec2T {
-			typedef ArithmeticOps<T>  arith;
-			typedef BooleanOps<T>	  boolean;
-			typedef MetaExp<vec2T, T> meta;
-
 			T _vec[2];
 		public:
-			T &x, &y;	// Convience Alias
+			T &x, &y;	// Convenience Alias
 
 			// Vector Vector Operators
-			vec2T &operator += (const vec2T &other) { meta::execute<1>(*this, other, arith::opPlus);   return *this; }
-			vec2T &operator -= (const vec2T &other) { meta::execute<1>(*this, other, arith::opMinus);  return *this; }
-			vec2T &operator *= (const vec2T &other) { meta::execute<1>(*this, other, arith::opMulti);  return *this; }
-			vec2T &operator /= (const vec2T &other) { meta::execute<1>(*this, other, arith::opDivide); return *this; }
+			vec2T &operator += (const vec2T &other) { MetaExp<vec2T,T>::execute<1>(*this, other, ArithmeticOps<T>::opPlus);   return *this; }
+			vec2T &operator -= (const vec2T &other) { MetaExp<vec2T,T>::execute<1>(*this, other, ArithmeticOps<T>::opMinus);  return *this; }
+			vec2T &operator *= (const vec2T &other) { MetaExp<vec2T,T>::execute<1>(*this, other, ArithmeticOps<T>::opMulti);  return *this; }
+			vec2T &operator /= (const vec2T &other) { MetaExp<vec2T,T>::execute<1>(*this, other, ArithmeticOps<T>::opDivide); return *this; }
 
 			// Vector Scaler Operators
-			vec2T &operator += (T value) { meta::execute<1>(*this, value, arith::opPlus);   return *this; }
-			vec2T &operator -= (T value) { meta::execute<1>(*this, value, arith::opMinus);  return *this; }
-			vec2T &operator *= (T value) { meta::execute<1>(*this, value, arith::opMulti);  return *this; }
-			vec2T &operator /= (T value) { meta::execute<1>(*this, value, arith::opDivide); return *this; }
+			vec2T &operator += (T value) { MetaExp<vec2T, T>::execute<1>(*this, value, ArithmeticOps<T>::opPlus);   return *this; }
+			vec2T &operator -= (T value) { MetaExp<vec2T, T>::execute<1>(*this, value, ArithmeticOps<T>::opMinus);  return *this; }
+			vec2T &operator *= (T value) { MetaExp<vec2T, T>::execute<1>(*this, value, ArithmeticOps<T>::opMulti);  return *this; }
+			vec2T &operator /= (T value) { MetaExp<vec2T, T>::execute<1>(*this, value, ArithmeticOps<T>::opDivide); return *this; }
 
 			// Boolean Operators
-			bool operator == (const vec2T &other) { return meta::test(*this, other, boolean::opEquals); }
+			bool operator == (const vec2T &other) { return MetaExp<vec2T, T>::test(*this, other, BooleanOps<T>::opEquals); }
 			bool operator != (const vec2T &other) { return !(*this == other); }
 
 			T &operator [] (size_t index) { return _vec[index]; }
 			const T operator [] (size_t index) const { return _vec[index]; }
 
 			// Vector Related Functions
-			inline T dot(const vec2T &other){ return meta::sum<1>(*this, other, arith::opPlus, arith::opMulti); }
+			inline T dot(const vec2T &other){ return MetaExp<vec2T, T>::sum<1>(*this, other, ArithmeticOps<T>::opPlus, ArithmeticOps<T>::opMulti); }
 			inline T lengthsqrd()		{ return dot(*this); }
 			inline T length()			{ return sqrt(lengthsqrd()); }
 			inline void normalize()		{ *this /= length(); }
@@ -51,6 +53,9 @@ namespace mathematical {
 			vec2T(T x, T y) : vec2T() { _vec[0] = x; _vec[1] = y; }
 			// Copy Constructor
 			vec2T(const vec2T &other) : x(_vec[0]), y(_vec[1]) { memcpy(&_vec, &other._vec, 2 * sizeof T); }
+			// Vector Constructor
+			vec2T(const vec3T<T> &vec) : vec2T() { _vec[0] = vec.x; _vec[1] = vec.y; }
+			vec2T(const vec4T<T> &vec) : vec2T() { _vec[0] = vec.x; _vec[1] = vec.y; }
 		};
 
 		// Binary Operators
@@ -67,35 +72,31 @@ namespace mathematical {
 		// 3 Element Vector
 		template <typename T>
 		class vec3T {
-			typedef ArithmeticOps<T>  arith;
-			typedef BooleanOps<T>	  boolean;
-			typedef MetaExp<vec3T, T> meta;
-
 			T _vec[3];
 		public:
-			T &x, &y, &z;	// Convience Alias
+			T &x, &y, &z;	// Convenience Alias
 
 			// Vector Vector Operators
-			vec3T &operator += (const vec3T &other) { meta::execute<2>(*this, other, arith::opPlus);   return *this; }
-			vec3T &operator -= (const vec3T &other) { meta::execute<2>(*this, other, arith::opMinus);  return *this; }
-			vec3T &operator *= (const vec3T &other) { meta::execute<2>(*this, other, arith::opMulti);  return *this; }
-			vec3T &operator /= (const vec3T &other) { meta::execute<2>(*this, other, arith::opDivide); return *this; }
+			vec3T &operator += (const vec3T &other) { MetaExp<vec3T,T>::execute<2>(*this, other, ArithmeticOps<T>::opPlus);   return *this; }
+			vec3T &operator -= (const vec3T &other) { MetaExp<vec3T,T>::execute<2>(*this, other, ArithmeticOps<T>::opMinus);  return *this; }
+			vec3T &operator *= (const vec3T &other) { MetaExp<vec3T,T>::execute<2>(*this, other, ArithmeticOps<T>::opMulti);  return *this; }
+			vec3T &operator /= (const vec3T &other) { MetaExp<vec3T,T>::execute<2>(*this, other, ArithmeticOps<T>::opDivide); return *this; }
 
 			// Vector Scaler Operators
-			vec3T &operator += (T value) { meta::execute<2>(*this, value, arith::opPlus);   return *this; }
-			vec3T &operator -= (T value) { meta::execute<2>(*this, value, arith::opMinus);  return *this; }
-			vec3T &operator *= (T value) { meta::execute<2>(*this, value, arith::opMulti);  return *this; }
-			vec3T &operator /= (T value) { meta::execute<2>(*this, value, arith::opDivide); return *this; }
+			vec3T &operator += (T value) { MetaExp<vec3T, T>::execute<2>(*this, value, ArithmeticOps<T>::opPlus);   return *this; }
+			vec3T &operator -= (T value) { MetaExp<vec3T, T>::execute<2>(*this, value, ArithmeticOps<T>::opMinus);  return *this; }
+			vec3T &operator *= (T value) { MetaExp<vec3T, T>::execute<2>(*this, value, ArithmeticOps<T>::opMulti);  return *this; }
+			vec3T &operator /= (T value) { MetaExp<vec3T, T>::execute<2>(*this, value, ArithmeticOps<T>::opDivide); return *this; }
 
 			// Boolean Operators
-			bool operator == (const vec3T &other) { return meta::test(*this, other, boolean::opEquals); }
+			bool operator == (const vec3T &other) { return  MetaExp<vec3T, T>::test(*this, other, BooleanOps<T>::opEquals); }
 			bool operator != (const vec3T &other) { return !(*this == other); }
 
 			T &operator [] (size_t index) { return _vec[index]; }
 			const T operator [] (size_t index) const { return _vec[index]; }
 
 			// Vector Related Functions
-			inline T dot(const vec3T &other) { return meta::sum<2>(*this, other, arith::opPlus, arith::opMulti); }
+			inline T dot(const vec3T &other) { return  MetaExp<vec3T, T>::sum<2>(*this, other, ArithmeticOps<T>::opPlus, ArithmeticOps<T>::opMulti); }
 			inline T lengthsqrd()			 { return dot(*this); }
 			inline T length()				 { return sqrt(lengthsqrd()); }
 			inline vec3T normalize()		 { *this /= length(); return *this; }
@@ -112,6 +113,10 @@ namespace mathematical {
 			vec3T(T x, T y, T z) : vec3T() { _vec[0] = x; _vec[1] = y; _vec[2] = z; }
 			// Copy Constructor
 			vec3T(const vec3T &other) : x(_vec[0]), y(_vec[1]), z(_vec[2]) { memcpy(&_vec, &other._vec, 3 * sizeof T); }
+			// Vector Constructor
+			vec3T(const vec2T<T> &vec, T z = 0) : vec3T() { _vec[0] = vec.x; _vec[1] = vec.y; _vec[2] = z; }
+			vec3T(T x, const vec2T<T> &vec) : vec3T() { _vec[0] = x; _vec[1] = vec.x; _vec[2] = vec.y; }
+			vec3T(const vec4T<T> &vec) : vec3T() { _vec[0] = vec.x; _vec[1] = vec.y; _vec[2] = vec.z; }
 
 			static vec3T normalize(vec3T vec) { return vec.normalize(); }
 		};
@@ -130,35 +135,31 @@ namespace mathematical {
 		// 4 Element Vector
 		template <typename T>
 		class vec4T {
-			typedef ArithmeticOps<T>  arith;
-			typedef BooleanOps<T>	  boolean;
-			typedef MetaExp<vec4T, T> meta;
-
 			T _vec[4];
 		public:
-			T &x, &y, &z, &w;	// Convience Alias
+			T &x, &y, &z, &w;	// Convenience Alias
 
 			// Vector Vector Operators
-			vec4T &operator += (const vec4T &other) { meta::execute<3>(*this, other, arith::opPlus);   return *this; }
-			vec4T &operator -= (const vec4T &other) { meta::execute<3>(*this, other, arith::opMinus);  return *this; }
-			vec4T &operator *= (const vec4T &other) { meta::execute<3>(*this, other, arith::opMulti);  return *this; }
-			vec4T &operator /= (const vec4T &other) { meta::execute<3>(*this, other, arith::opDivide); return *this; }
+			vec4T &operator += (const vec4T &other) { MetaExp<vec4T, T>::execute<3>(*this, other, ArithmeticOps<T>::opPlus);   return *this; }
+			vec4T &operator -= (const vec4T &other) { MetaExp<vec4T, T>::execute<3>(*this, other, ArithmeticOps<T>::opMinus);  return *this; }
+			vec4T &operator *= (const vec4T &other) { MetaExp<vec4T, T>::execute<3>(*this, other, ArithmeticOps<T>::opMulti);  return *this; }
+			vec4T &operator /= (const vec4T &other) { MetaExp<vec4T, T>::execute<3>(*this, other, ArithmeticOps<T>::opDivide); return *this; }
 
 			// Vector Scaler Operators
-			vec4T &operator += (T value) { meta::execute<3>(*this, value, arith::opPlus);   return *this; }
-			vec4T &operator -= (T value) { meta::execute<3>(*this, value, arith::opMinus);  return *this; }
-			vec4T &operator *= (T value) { meta::execute<3>(*this, value, arith::opMulti);  return *this; }
-			vec4T &operator /= (T value) { meta::execute<3>(*this, value, arith::opDivide); return *this; }
+			vec4T &operator += (T value) { MetaExp<vec4T, T>::execute<3>(*this, value, ArithmeticOps<T>::opPlus);   return *this; }
+			vec4T &operator -= (T value) { MetaExp<vec4T, T>::execute<3>(*this, value, ArithmeticOps<T>::opMinus);  return *this; }
+			vec4T &operator *= (T value) { MetaExp<vec4T, T>::execute<3>(*this, value, ArithmeticOps<T>::opMulti);  return *this; }
+			vec4T &operator /= (T value) { MetaExp<vec4T, T>::execute<3>(*this, value, ArithmeticOps<T>::opDivide); return *this; }
 
 			// Boolean Operators
-			bool operator == (const vec4T &other) { return meta::test(*this, other, boolean::opEquals); }
+			bool operator == (const vec4T &other) { return MetaExp<vec4T, T>::test(*this, other, BooleanOps<T>::opEquals); }
 			bool operator != (const vec4T &other) { return !(*this == other); }
 
 			T &operator [] (size_t index) { return _vec[index]; }
 			const T operator [] (size_t index) const { return _vec[index]; }
 
 			// Vector Related Functions
-			inline T dot(const vec4T &other){ return meta::sum<3>(*this, other, arith::opPlus, arith::opMulti); }
+			inline T dot(const vec4T &other){ return MetaExp<vec4T, T>::sum<3>(*this, other, ArithmeticOps<T>::opPlus, ArithmeticOps<T>::opMulti); }
 			inline T lengthsqrd()		{ return dot(*this); }
 			inline T length()			{ return sqrt(lengthsqrd()); }
 			inline void normalize()		{ *this /= length(); }
@@ -171,6 +172,13 @@ namespace mathematical {
 			vec4T(T x, T y, T z, T w) : vec4T() { _vec[0] = x; _vec[1] = y; _vec[2] = z; _vec[3] = w; }
 			// Copy Constructor
 			vec4T(const vec4T &other) : x(_vec[0]), y(_vec[1]), z(_vec[2]), w(_vec[3]) { memcpy(&_vec, &other._vec, 4 * sizeof T); }
+			// Vector Contructors
+			vec4T(const vec3T<T> &vec, T w = 1) : vec4T() { _vec[0] = vec.x; _vec[1] = vec.y; _vec[2] = vec.z; _vec[3] = w; }
+			vec4T(T x, const vec3T<T> &vec) : vec4T() { _vec[0] = x; _vec[1] = vec.x; _vec[2] = vec.y; _vec[3] = vec.z; }
+			vec4T(const vec2T<T> &vec, T z = 0, T w = 1) : vec4T() { _vec[0] = vec.x; _vec[1] = vec.y; _vec[2] = z; _vec[3] = w; }
+			vec4T(T x, const vec2T<T> &vec, T w = 1) : vec4T() { _vec[0] = x; _vec[1] = vec.x; _vec[2] = vec.y; _vec[3] = w; }
+			vec4T(T x, T y, const vec2T<T> &vec) : vec4T() { _vec[0] = x; _vec[1] = y; _vec[2] = vec.x; _vec[3] = vec.y; }
+			vec4T(const vec2T<T> &v1, const vec2T<T> &v2) : vec4T() { _vec[0] = v1.x; _vec[1] = v1.y; _vec[2] = v2.x; _vec[3] = v2.y; }
 		};
 
 		// Binary Operators
