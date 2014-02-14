@@ -83,6 +83,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\Matrix.h" />
+    <ClInclude Include="..\..\..\..\include\Quaternions.h" />
     <ClInclude Include="..\..\..\..\include\Swizzle.h" />
     <ClInclude Include="..\..\..\..\include\TemplateExpressions.h" />
     <ClInclude Include="..\..\..\..\include\Vector.h" />

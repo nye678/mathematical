@@ -254,6 +254,46 @@ namespace mathematical {
 
 			// Transpose Matrix
 			static mat4T transpose(mat4T mat) { return mat.transpose(); }
+
+			// Look At Matrix
+			static mat4T lookat(const vec3T<T> point, const vec3T<T> eye, const vec3T<T> up) {
+				vec3T<T> forward = point - eye;
+				forward.normalize();
+				vec3T<T> sideways = forward.cross(up);
+				vec3T<T> newUp = sideways.cross(forward);
+				
+				return mat4T({
+					sideways.x, newUp.x, forward.x, -eye.x,
+					sideways.y, newUp.y, forward.y, -eye.y,
+					sideways.z, newUp.z, forward.z, -eye.z,
+					0,			0,		 0,			1
+				});
+			}
+
+			// Perspective Matrix
+			static mat4T perspective(T fov, T aspect, T near, T far) {
+				T q = 1.0f / tan(radians(0.5f * fovy));
+				T A = q / aspect;
+				T B = (n + f) / (n - f);
+				T C = (2.0f * n * f) / (n - f);
+
+				return mat4T({
+					A, 0.0f, 0.0f, 0.0f,
+					0.0f, q, 0.0f, 0.0f,
+					0.0f, 0.0f, B, -1.0f,
+					0.0f, 0.0f, C, 0.0f
+				});
+			}
+
+			// Orthographic Matrix
+			static mat4T ortho(T left, T right, T bottom, T top, T near, T far) {
+				return mat4T({
+					2.0f / (right - left), 0.0f,				  0.0f,				   (left + right) / (left - right),
+					0.0f,				   2.0f / (top - bottom), 0.0f,				   (bottom + top) / (bottom - top),
+					0.0f,				   0.0f,				  2.0f / (near - far), (near + far) / (far - near),
+					0.0f,				   0.0f,				  0.0f,				   1.0f
+				});
+			}
 		};
 
 		// Matrix Binary Operators
