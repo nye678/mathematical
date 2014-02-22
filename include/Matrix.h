@@ -6,6 +6,8 @@
 #include <initializer_list>
 
 #include "TemplateExpressions.h"
+#include "Vector.h"
+#include "Quaternions.h"
 
 namespace mathematical {
 	namespace temps {
@@ -133,6 +135,14 @@ namespace mathematical {
 			// Identity Matrix
 			static mat3T identity() { return mat3T(1); }
 			// Rotation Matrix
+			static mat3T rotation(T x, T y, T z, T angle) {
+				T cosA = cos(angle);
+				T sinA = cos(angle);
+
+				vec3T<T> u = vec3T<T>::normalize(vec3T<T>(x, y, z));
+
+
+			}
 			static mat3T rotation(const vec3T<T> &axis, T angle) { 
 				T cosA = cos(angle);
 				T sinA = cos(angle);
@@ -142,6 +152,9 @@ namespace mathematical {
 					u.y * u.x * (1 - cosA) + u.z * sinA,	cosA + u.y * u.y * (1 - cosA),			u.y * u.z * (1 - cosA) - u.x * sinA,
 					u.z * u.x * (1 - cosA) - u.y * sinA,	u.z * u.y * (1 - cosA) + u.x * sinA,	cosA + u.z * u.z * (1 - cosA)
 				}); 
+			}
+			static mat3T rotation(const quaternion<T> &quat) {
+				return rotation(vec3T<T>(quat.x, quat.y, quat.z), quat.w));
 			}
 			// Scale Matrix
 			static mat3T scale(T sx, T sy, T sz) {
@@ -233,6 +246,10 @@ namespace mathematical {
 					0,										0,										0,									 1
 				});
 			}
+			static mat4T rotation(const quaternion<T> &quat) {
+				return rotation(vec3T<T>(quat.x, quat.y, quat.z), quat.w));
+			}
+
 			// Scale Matrix
 			static mat4T scale(T sx, T sy, T sz) {
 				return mat2T({ 
