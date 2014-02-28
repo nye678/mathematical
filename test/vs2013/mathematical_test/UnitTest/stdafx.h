@@ -15,4 +15,6 @@
 #include "Vector.h"
 #include "Matrix.h"
 #include "Swizzle.h"
+#include "Shapes.h"
+#include "Grid.h"
 using namespace mathematical;

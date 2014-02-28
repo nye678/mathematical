@@ -11,7 +11,7 @@ namespace mathematical {
 		class quaternion {
 			T _quat[4];
 		public:
-			T w&, x&, y&, z&;
+			T &w, &x, &y, &z;
 
 			quaternion &operator += (const quaternion &other) { MetaExp<quaternion, T>::execute(*this, other, ArithmeticOps<T>::opPlus); return *this; }
 			quaternion &operator -= (const quaternion &other) { MetaExp<quaternion, T>::execute(*this, other, ArithmeticOps<T>::opMinus); return *this; }

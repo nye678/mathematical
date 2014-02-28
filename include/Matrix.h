@@ -140,8 +140,6 @@ namespace mathematical {
 				T sinA = cos(angle);
 
 				vec3T<T> u = vec3T<T>::normalize(vec3T<T>(x, y, z));
-
-
 			}
 			static mat3T rotation(const vec3T<T> &axis, T angle) { 
 				T cosA = cos(angle);
@@ -154,7 +152,7 @@ namespace mathematical {
 				}); 
 			}
 			static mat3T rotation(const quaternion<T> &quat) {
-				return rotation(vec3T<T>(quat.x, quat.y, quat.z), quat.w));
+				return rotation(vec3T<T>(quat.x, quat.y, quat.z), quat.w);
 			}
 			// Scale Matrix
 			static mat3T scale(T sx, T sy, T sz) {
@@ -247,7 +245,7 @@ namespace mathematical {
 				});
 			}
 			static mat4T rotation(const quaternion<T> &quat) {
-				return rotation(vec3T<T>(quat.x, quat.y, quat.z), quat.w));
+				return rotation(vec3T<T>(quat.x, quat.y, quat.z), quat.w);
 			}
 
 			// Scale Matrix
