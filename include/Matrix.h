@@ -1,20 +1,22 @@
 #ifndef __MATHEMATICAL_MATRIX_H_
 #define __MATHEMATICAL_MATRIX_H_
 
-#include <cmath>
 #include <cassert>
 #include <initializer_list>
 
+#include "BasicMath.h"
 #include "TemplateExpressions.h"
 #include "Vector.h"
 #include "Quaternions.h"
 
 namespace mathematical {
-	namespace temps {
+	namespace templates {
 		template <typename T>
-		class mat2T {
+		union mat2T {
 			T _mat[4];
 		public:
+			struct { T m00, m10, m01, m11; } cells;
+
 			// Matrix Matrix Operators
 			mat2T &operator += (const mat2T &other) { MetaExp<mat2T,T>::execute<3>(*this, other, ArithmeticOps<T>::opPlus);  return *this; }
 			mat2T &operator -= (const mat2T &other) { MetaExp<mat2T,T>::execute<3>(*this, other, ArithmeticOps<T>::opMinus); return *this; }
@@ -63,7 +65,7 @@ namespace mathematical {
 			static mat2T scale(T sx, T sy) { return mat2T({ sx, 0, 0, sy }); }
 			// Transpose Matrix
 			static mat2T transpose(mat2T mat) { return mat.transpose(); }
- 		};
+		};
 
 		template <typename T> inline mat2T<T> operator + (mat2T<T> lhs, const mat2T<T> &rhs) { return lhs += rhs; }
 		template <typename T> inline mat2T<T> operator - (mat2T<T> lhs, const mat2T<T> &rhs) { return lhs -= rhs; }
@@ -178,13 +180,15 @@ namespace mathematical {
 		}
 
 		template <typename T>
-		class mat4T {
-			T _mat[6];
+		union mat4T {
+			T _mat[16];
+	
 		public:
+
 			// Matrix Matrix Operators
 			mat4T &operator += (const mat4T &other) { MetaExp<mat2T, T>::execute<15>(*this, other, ArithmeticOps<T>::opPlus);  return *this; }
 			mat4T &operator -= (const mat4T &other) { MetaExp<mat2T, T>::execute<15>(*this, other, ArithmeticOps<T>::opMinus); return *this; }
-			mat4T &operator *= (const mat4T &other) { MatrixMeta<mat2T, T, 4>::matrixMulti<15>(*this, other); return *this; }
+			mat4T &operator *= (const mat4T &other) { MatrixMeta<mat4T, T, 4>::matrixMulti<15>(*this, other); return *this; }
 
 			// Matrix Scaler Operators
 			mat4T &operator *= (T value) { MetaExp<mat4T, T>::execute<15>(*this, value, ArithmeticOps<T>::opMulti);  return *this; }
@@ -287,7 +291,7 @@ namespace mathematical {
 
 			// Perspective Matrix
 			static mat4T perspective(T fov, T aspect, T near, T far) {
-				T q = 1.0f / tan(radians(0.5f * fovy));
+				T q = 1.0f / tan(toRadians(0.5f * fovy));
 				T A = q / aspect;
 				T B = (n + f) / (n - f);
 				T C = (2.0f * n * f) / (n - f);
@@ -335,15 +339,13 @@ namespace mathematical {
 		}
 	}
 
+	typedef templates::mat2T<float> mat2f;
+	typedef templates::mat3T<float> mat3f;
+	typedef templates::mat4T<float> mat4f;
 
-	typedef temps::mat2T<float> mat2f;
-	typedef temps::mat3T<float> mat3f;
-	typedef temps::mat4T<float> mat4f;
-
-	typedef temps::mat2T<double> mat2d;
-	typedef temps::mat3T<double> mat3d;
-	typedef temps::mat4T<double> mat4d;
-
+	typedef templates::mat2T<double> mat2d;
+	typedef templates::mat3T<double> mat3d;
+	typedef templates::mat4T<double> mat4d;
 }
 
 #endif

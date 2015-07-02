@@ -2,7 +2,7 @@
 #define __MATHEMATICAL_TEMPLATEEXPRESSIONS_H_
 
 namespace mathematical {
-	namespace temps {
+	namespace templates {
 		// Arithmetic Operators 
 		// Used by the Meta Expressions so operators can be passed as arguments.
 		template <typename T>
@@ -76,6 +76,7 @@ namespace mathematical {
 			// those elements are totaled using the sumOp operation. Used for dot products mostly.
 			template <int I>
 			static inline T sum(S &lhs, const S &rhs, ArithOp sumOp, ArithOp op) {
+
 				return sumOp(op(lhs[I], rhs[I]), sum<I - 1>(lhs, rhs, sumOp, op));
 			}
 
@@ -134,7 +135,7 @@ namespace mathematical {
 			{
 				matrix[0] = value;
 			}
-		};
+		};	
 	}
 }
 

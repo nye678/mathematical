@@ -23,13 +23,6 @@ namespace mathematical {
 		}
 	};
 
-	class RectangleGrid : public IGrid<Rectangle<float>*> {
-		Rectangle<float>* _grid;
-
-	public:
-		virtual void insert(Rectangle<float>* )
-	};
-
 }
 
 #endif

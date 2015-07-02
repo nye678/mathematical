@@ -45,7 +45,13 @@
     <ClInclude Include="..\..\..\..\include\Shapes.h">
       <Filter>mathematical</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\include\Grid.h">
+    <ClInclude Include="..\..\..\..\include\Collisions.h">
+      <Filter>mathematical</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\RigidBody.h">
+      <Filter>mathematical</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\BasicMath.h">
       <Filter>mathematical</Filter>
     </ClInclude>
   </ItemGroup>

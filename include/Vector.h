@@ -6,19 +6,19 @@
 #include "TemplateExpressions.h"
 
 namespace mathematical {
-	namespace temps {
+	namespace templates {
 
 		// Forward Declarations
-		template <typename T> class vec2T;
-		template <typename T> class vec3T;
-		template <typename T> class vec4T;
+		template <typename T> union vec2T;
+		template <typename T> union vec3T;
+		template <typename T> union vec4T;
 
 		// 2 Element Vector
 		template <typename T>
-		class vec2T {
+		union vec2T {
 			T _vec[2];
 		public:
-			T &x, &y;	// Convenience Alias
+			struct { T x, y; };
 
 			// Vector Vector Operators
 			vec2T &operator += (const vec2T &other) { MetaExp<vec2T,T>::execute<1>(*this, other, ArithmeticOps<T>::opPlus);   return *this; }
@@ -46,16 +46,16 @@ namespace mathematical {
 			inline void normalize()		{ *this /= length(); }
 
 			// Default Constructor, Initializes all elements to 0.
-			vec2T() : x(_vec[0]), y(_vec[1]) { memset(&_vec, 0, 2 * sizeof T); }
+			vec2T() = default;
 			// Single Constructor, Initializes all elements to the value.
-			vec2T(T v) : vec2T() { _vec[0] = v; _vec[1] = v; }
+			vec2T(T v) : x(v), y(v) {}
 			// Element Constructor, Initializes all elements to the given element values.
-			vec2T(T x, T y) : vec2T() { _vec[0] = x; _vec[1] = y; }
+			vec2T(T x, T y) : x(x), y(y) {}
 			// Copy Constructor
-			vec2T(const vec2T &other) : x(_vec[0]), y(_vec[1]) { memcpy(&_vec, &other._vec, 2 * sizeof T); }
+			vec2T(const vec2T &other) : x(other.x), y(other.y) {}
 			// Vector Constructor
-			vec2T(const vec3T<T> &vec) : vec2T() { _vec[0] = vec.x; _vec[1] = vec.y; }
-			vec2T(const vec4T<T> &vec) : vec2T() { _vec[0] = vec.x; _vec[1] = vec.y; }
+			vec2T(const vec3T<T> &vec) : x(vec.x), y(vec.y) {}
+			vec2T(const vec4T<T> &vec) : x(vec.x), y(vec.y) {}
 		};
 
 		// Binary Operators
@@ -71,10 +71,10 @@ namespace mathematical {
 
 		// 3 Element Vector
 		template <typename T>
-		class vec3T {
+		union vec3T {
 			T _vec[3];
 		public:
-			T &x, &y, &z;	// Convenience Alias
+			struct { T x, y, z; };
 
 			// Vector Vector Operators
 			vec3T &operator += (const vec3T &other) { MetaExp<vec3T,T>::execute<2>(*this, other, ArithmeticOps<T>::opPlus);   return *this; }
@@ -106,17 +106,17 @@ namespace mathematical {
 			}
 
 			// Default Constructor, Initializes all elements to 0.
-			vec3T() : x(_vec[0]), y(_vec[1]), z(_vec[2]) { memset(&_vec, 0, 2 * sizeof T); }
+			vec3T() = default;
 			// Single Constructor, Initializes all elements to the value.
-			vec3T(T v) : vec3T() { _vec[0] = v; _vec[1] = v; _vec[2] = v; }
+			vec3T(T v) : x(v), y(v), z(v) {}
 			// Element Constructor, Initializes all elements to the given element values.
-			vec3T(T x, T y, T z) : vec3T() { _vec[0] = x; _vec[1] = y; _vec[2] = z; }
+			vec3T(T x, T y, T z) : x(x), y(y), z(z) {}
 			// Copy Constructor
-			vec3T(const vec3T &other) : x(_vec[0]), y(_vec[1]), z(_vec[2]) { memcpy(&_vec, &other._vec, 3 * sizeof T); }
+			vec3T(const vec3T &other) : x(other.x), y(other.y), z(other.z) {}
 			// Vector Constructor
-			vec3T(const vec2T<T> &vec, T z = 0) : vec3T() { _vec[0] = vec.x; _vec[1] = vec.y; _vec[2] = z; }
-			vec3T(T x, const vec2T<T> &vec) : vec3T() { _vec[0] = x; _vec[1] = vec.x; _vec[2] = vec.y; }
-			vec3T(const vec4T<T> &vec) : vec3T() { _vec[0] = vec.x; _vec[1] = vec.y; _vec[2] = vec.z; }
+			vec3T(const vec2T<T> &vec, T z = 0) : x(vec.x), y(vec.y) z(z) {}
+			vec3T(T x, const vec2T<T> &vec) : x(x), y(vec.x) z(vec.y) {}
+			vec3T(const vec4T<T> &vec) : x(vec.x), y(vec.y) z(vec.z) {}
 
 			static vec3T normalize(vec3T vec) { return vec.normalize(); }
 		};
@@ -134,10 +134,10 @@ namespace mathematical {
 
 		// 4 Element Vector
 		template <typename T>
-		class vec4T {
+		union vec4T {
 			T _vec[4];
 		public:
-			T &x, &y, &z, &w;	// Convenience Alias
+			struct { T x, y, z, w; };
 
 			// Vector Vector Operators
 			vec4T &operator += (const vec4T &other) { MetaExp<vec4T, T>::execute<3>(*this, other, ArithmeticOps<T>::opPlus);   return *this; }
@@ -165,20 +165,20 @@ namespace mathematical {
 			inline void normalize()		{ *this /= length(); }
 
 			// Default Constructor, Initializes all elements to 0.
-			vec4T() : x(_vec[0]), y(_vec[1]), z(_vec[2]), w(_vec[3]) { memset(&_vec, 0, 2 * sizeof T); }
+			vec4T() = default;
 			// Single Constructor, Initializes all elements to the value.
-			vec4T(T v) : vec4T() { _vec[0] = v; _vec[1] = v; _vec[2] = v; _vec[3] = v; }
+			vec4T(T v) : x(v), y(v), z(v), w(v) {}
 			// Element Constructor, Initializes all elements to the given element values.
-			vec4T(T x, T y, T z, T w) : vec4T() { _vec[0] = x; _vec[1] = y; _vec[2] = z; _vec[3] = w; }
+			vec4T(T x, T y, T z, T w) : x(x), y(y), z(z), w(w) {}
 			// Copy Constructor
-			vec4T(const vec4T &other) : x(_vec[0]), y(_vec[1]), z(_vec[2]), w(_vec[3]) { memcpy(&_vec, &other._vec, 4 * sizeof T); }
+			vec4T(const vec4T &other) : x(other.x), y(other.y), z(other.z), w(other.w) {}
 			// Vector Contructors
-			vec4T(const vec3T<T> &vec, T w = 1) : vec4T() { _vec[0] = vec.x; _vec[1] = vec.y; _vec[2] = vec.z; _vec[3] = w; }
-			vec4T(T x, const vec3T<T> &vec) : vec4T() { _vec[0] = x; _vec[1] = vec.x; _vec[2] = vec.y; _vec[3] = vec.z; }
-			vec4T(const vec2T<T> &vec, T z = 0, T w = 1) : vec4T() { _vec[0] = vec.x; _vec[1] = vec.y; _vec[2] = z; _vec[3] = w; }
-			vec4T(T x, const vec2T<T> &vec, T w = 1) : vec4T() { _vec[0] = x; _vec[1] = vec.x; _vec[2] = vec.y; _vec[3] = w; }
-			vec4T(T x, T y, const vec2T<T> &vec) : vec4T() { _vec[0] = x; _vec[1] = y; _vec[2] = vec.x; _vec[3] = vec.y; }
-			vec4T(const vec2T<T> &v1, const vec2T<T> &v2) : vec4T() { _vec[0] = v1.x; _vec[1] = v1.y; _vec[2] = v2.x; _vec[3] = v2.y; }
+			vec4T(const vec3T<T> &vec, T w = 1) : vec4T() x(vec.x), y(vec.y), z(vec.z), w(w) {}
+			vec4T(T x, const vec3T<T> &vec) : vec4T() x(x), y(vec.y), z(vec.z), w(vec.w) {}
+			vec4T(const vec2T<T> &vec, T z = 0, T w = 1) : vec4T() x(vec.x), y(vec.y), z(z), w(w) {}
+			vec4T(T x, const vec2T<T> &vec, T w = 1) : vec4T() x(x), y(vec.x), z(vec.y), w(w) {}
+			vec4T(T x, T y, const vec2T<T> &vec) : vec4T() x(x), y(y), z(vec.x), w(vec.y) {}
+			vec4T(const vec2T<T> &v1, const vec2T<T> &v2) : vec4T() x(v1.x), y(v1.y), z(v2.x), w(v2.y) {}
 		};
 
 		// Binary Operators
@@ -197,17 +197,23 @@ namespace mathematical {
 	// Type Definitions for the user!
 
 	// 2 Element Float Vector
-	typedef temps::vec2T<float> vec2f;
+	typedef templates::vec2T<float> vec2f;
 	// 3 Element Float Vector
-	typedef temps::vec3T<float> vec3f;
+	typedef templates::vec3T<float> vec3f;
 	// 4 Element Float Vector
-	typedef temps::vec4T<float> vec4f;
+	typedef templates::vec4T<float> vec4f;
 	// 2 Element Double Vector
-	typedef temps::vec2T<double> vec2d;
+	typedef templates::vec2T<double> vec2d;
 	// 3 Element Double Vector
-	typedef temps::vec3T<double> vec3d;
+	typedef templates::vec3T<double> vec3d;
 	// 4 Element Double Vector
-	typedef temps::vec4T<double> vec4d;
+	typedef templates::vec4T<double> vec4d;
+	// 2 Element Int Vector
+	typedef templates::vec2T<int> vec2i;
+	// 3 Element Int Vector
+	typedef templates::vec3T<int> vec3i;
+	// 4 Element Int Vector
+	typedef templates::vec4T<int> vec4i;
 }
 
 #endif

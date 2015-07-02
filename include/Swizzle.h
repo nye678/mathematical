@@ -4,7 +4,7 @@
 #include "Vector.h"
 
 namespace mathematical {
-	namespace temps {
+	namespace templates {
 		template <typename T>
 		class Swizzle {
 		public:
@@ -470,8 +470,8 @@ namespace mathematical {
 		};
 	}
 
-	typedef temps::Swizzle<float> Swizzlef;
-	typedef temps::Swizzle<double> Swizzled;
+	typedef templates::Swizzle<float> Swizzlef;
+	typedef templates::Swizzle<double> Swizzled;
 }
 
 #endif

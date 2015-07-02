@@ -43,10 +43,17 @@ namespace UnitTest
 
 			float length = sqrt(86.0f);
 			float answer[4] = { 3.0f / length, 4.0f / length, 5.0f / length, 6.0f / length };
-			float vlen = v1.lengthsqrd();
+			float normalizedLength =
+				sqrt(answer[0] * answer[0]
+				+ answer[1] * answer[1]
+				+ answer[2] * answer[2]
+				+ answer[3] * answer[3]);
 
-			Assert::IsTrue(v1.x == answer[0] && v1.y == answer[1] && v1.z == answer[2] && v1.w == answer[3]);
-			Assert::AreEqual<float>(v1.length(), 1.0f);
+			Assert::AreEqual(answer[0], v1.x);
+			Assert::AreEqual(answer[1], v1.y);
+			Assert::AreEqual(answer[2], v1.z);
+			Assert::AreEqual(answer[3], v1.w);
+			Assert::AreEqual(normalizedLength, v1.length());
 		}
 
 		TEST_METHOD(Vector4d_Normalize)
@@ -56,10 +63,17 @@ namespace UnitTest
 
 			double length = sqrt(86.0);
 			double answer[4] = { 3.0 / length, 4.0 / length, 5.0 / length, 6.0 / length };
-			double vlen = v1.lengthsqrd();
+			double normalizedLength =
+				sqrt(answer[0] * answer[0]
+					+ answer[1] * answer[1]
+					+ answer[2] * answer[2]
+					+ answer[3] * answer[3]);
 
-			Assert::IsTrue(v1.x == answer[0] && v1.y == answer[1] && v1.z == answer[2] && v1.w == answer[3]);
-			Assert::AreEqual<double>(v1.length(), 1.0);
+			Assert::AreEqual(answer[0], v1.x);
+			Assert::AreEqual(answer[1], v1.y);
+			Assert::AreEqual(answer[2], v1.z);
+			Assert::AreEqual(answer[3], v1.w);
+			Assert::AreEqual(normalizedLength, v1.length());
 		}
 
 	};

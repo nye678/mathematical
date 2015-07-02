@@ -21,51 +21,45 @@ namespace mathematical {
 	};
 
 	template <typename T>
-	bool testCollision(Point* point1, Point* point2, RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
+	bool testCollisionPointPoint(RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
 	{
 		
 	}
 
 	template <typename T>
-	bool testCollision(Point* point, Line* line, RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
+	bool testCollisionPointLine(RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
 	{
 
 	}
 
 	template <typename T>
-	bool testCollision(Point* point1, Rectangle* rect, RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
+	bool testCollisionPointRectangle(RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
 	{
 
 	}
 
 	template <typename T>
-	bool testCollision(Point* point1, Circle* circle, RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
+	bool testCollisionPointCircle(RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
 	{
 
 	}
 
 	template <typename T>
-	bool testCollision(Point* point1, Plane* plane, RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
+	bool testCollisionPointPlane(RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
 	{
 
 	}
 
 	template <typename T>
-	bool testCollision(Point* point1, Cuboid* cupoid, RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
+	bool testCollisionPointCuboid(RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
 	{
 
 	}
 
 	template <typename T>
-	bool testCollision(Point* point1, Sphere* sphere, RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
+	bool testCollisionPointSphere(RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
 	{
 
-	}
-
-	template <typename T>
-	bool testCollision(RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
-	{
-		return testCollision(rb1->shape, rb2->shape, body1, body2, c);
 	}
 }
 

@@ -5,13 +5,13 @@
 #include "TemplateExpressions.h"
 
 namespace mathematical {
-	namespace temps {
+	namespace templates {
 
 		template <typename T>
-		class quaternion {
+		union quaternion {
 			T _quat[4];
 		public:
-			T &w, &x, &y, &z;
+			struct { T w, x, y, z; };
 
 			quaternion &operator += (const quaternion &other) { MetaExp<quaternion, T>::execute(*this, other, ArithmeticOps<T>::opPlus); return *this; }
 			quaternion &operator -= (const quaternion &other) { MetaExp<quaternion, T>::execute(*this, other, ArithmeticOps<T>::opMinus); return *this; }
@@ -25,19 +25,14 @@ namespace mathematical {
 				w = tw; x = tx; y = ty; z = tz;
 			}
 
-			quaternion() : w(_quat[0]), x(_quat[1]), y(_quat[2]), z(_quat[3]) { memset(&_quat, 0, 4 * sizeof T); }
-			quaternion(T angle, T x, T y, T z) : w(_quat[0]), x(_quat[1]), y(_quat[2]), z(_quat[3]) {
-				this->w = angle;
-				this->x = x;
-				this->y = y;
-				this->z = z;
-			}
+			quaternion() : w(0), x(0), y(0), z(0) {}
+			quaternion(T angle, T x, T y, T z) : w(angle), x(x), y(y), z(z) {};
 		};
 
 	}
 
-	typedef temps::quaternion<float> quatf;
-	typedef temps::quaternion<double> quatd;
+	typedef templates::quaternion<float> quatf;
+	typedef templates::quaternion<double> quatd;
 }
 
 #endif
