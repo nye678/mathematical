@@ -7,8 +7,8 @@ namespace mathematical {
 
 	template <typename T>
 	struct RigidBody {
-		Shape<T>* shape;
-		vec3T<T> position;
+		Shape<T> shape;
+		templates::vec3T<T> position;
 	};
 
 }

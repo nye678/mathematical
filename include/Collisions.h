@@ -9,58 +9,62 @@ namespace mathematical {
 	template <typename T>
 	struct Contact {
 		RigidBody<T> *body1, *body2;
-		vec3T<T> contactNormal;
-		vec3T<T> contactPoint;
+		templates::vec3T<T> contactNormal;
+		templates::vec3T<T> contactPoint;
 		T penetration;
 	};
 
 	template <typename T, size_t M>
 	struct CollisionData {
 		const size_t NumContacts = M;
-		Contact[M] contactData;
+		Contact contactData[M];
 	};
 
 	template <typename T>
-	bool testCollisionPointPoint(RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
+	bool testCollisionPointPoint(RigidBody<T>* body1, RigidBody<T>* body2, CollisionData<T, 10>* collisionData)
 	{
-		
+		Shape<T> &shape1 = body1->shape;
+		T width = shape1.shape.rectangle.width; asdfkjds;flj
 	}
 
 	template <typename T>
-	bool testCollisionPointLine(RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
-	{
-
-	}
-
-	template <typename T>
-	bool testCollisionPointRectangle(RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
+	bool testCollisionPointLine(RigidBody<T>* body1, RigidBody<T>* body2, CollisionData<T, 10>* collisionData)
 	{
 
 	}
 
 	template <typename T>
-	bool testCollisionPointCircle(RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
+	bool testCollisionPointRectangle(RigidBody<T>* body1, RigidBody<T>* body2, CollisionData<T, 10>* collisionData)
 	{
 
 	}
 
 	template <typename T>
-	bool testCollisionPointPlane(RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
+	bool testCollisionPointCircle(RigidBody<T>* body1, RigidBody<T>* body2, CollisionData<T, 10>* collisionData)
 	{
 
 	}
 
 	template <typename T>
-	bool testCollisionPointCuboid(RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
+	bool testCollisionPointPlane(RigidBody<T>* body1, RigidBody<T>* body2, CollisionData<T, 10>* collisionData)
 	{
 
 	}
 
 	template <typename T>
-	bool testCollisionPointSphere(RigidBody* body1, RigidBody* body2, CollisionData* collisionData)
+	bool testCollisionPointCuboid(RigidBody<T>* body1, RigidBody<T>* body2, CollisionData<T, 10>* collisionData)
 	{
 
 	}
+
+	template <typename T>
+	bool testCollisionPointSphere(RigidBody<T>* body1, RigidBody<T>* body2, CollisionData<T, 10>* collisionData)
+	{
+
+	}
+
+	template <>
+	bool testCollisionPointPoint<float>(RigidBody<float>* body1, RigidBody<float>* body2, CollisionData<float, 10>* collisionData);
 }
 
 #endif
